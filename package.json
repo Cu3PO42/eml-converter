@@ -1,0 +1,30 @@
+{
+  "name": "eml-converter",
+  "version": "0.1.0",
+  "description": "A tool for converting mime-encoded emails to HTML and PDF.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://Cu3PO42@github.com/Cu3PO42/eml-converter.git"
+  },
+  "author": "Cu3PO42",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Cu3PO42/eml-converter/issues"
+  },
+  "homepage": "https://github.com/Cu3PO42/eml-converter",
+  "dependencies": {
+    "glob": "^5.0.5",
+    "handlebars": "^3.0.2",
+    "html-pdf": "^1.1.0",
+    "lodash": "^3.7.0",
+    "mailparser": "^0.5.0",
+    "minimist": "^1.1.1",
+    "moment": "^2.10.2",
+    "q": "^1.2.0"
+  },
+  "devDependencies": {}
+}

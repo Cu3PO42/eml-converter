@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Mails</title>
+</head>
+<body>
+    {{#each mails}}
+        <div class='mail'>
+            <div class='header'>
+                <table>
+                    <tr>
+                        <th>Subject</th>
+                        <td>{{subject}}</td>
+                    </tr>
+                    <tr>
+                        <th>From</th>
+                        <td>{{from[0].name}} ({{from[0].address}})</td>
+                    </tr>
+                    <tr>
+                        <th>To</th>
+                        <td>{{#each to}}{{name}} ({{address}}), {{/each}}</td>
+                    </tr>
+                    <tr>
+                        <th>Date</th>
+                        <td>{{date.toString()}}</td>
+                    </tr>
+            </div>
+        </div>
+    {{/each}}
+</body>
+</html>
