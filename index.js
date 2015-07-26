@@ -11,20 +11,20 @@ var fs = require('fs'),
     pdf = require('html-pdf'),
     argv = require('minimist')(process.argv.slice(2));
 
-Q.all(Q.nfcall(glob, argv._[0]),
-      Q.nfcall(fs.readFile, path.join(path.dirname(process.argv[1]), 'template.hbs'), 'r'))
+var template = hbs.compile(fs.readFileSync(path.join(__dirname, 'template.hbs'), {encoding: 'utf8'}));
+
+Q.nfcall(glob, argv._[0])
 .then(function(files) {
     if (argv.c) {
         Q.all(_.map(files, readMail)).then(function(mails) {
-            var sortedMails = _.sortBy(mails, 'date'),
-                filed = path.parse(files[0]);
-            return render(sortedMails, template, path.join(filed.dir, filed.name));
+            var sortedMails = _.sortBy(mails, 'date');
+            return render(sortedMails, template, path.join(path.dirname(files[0]), path.basename(files[0], '.eml')));
         });
     } else {
         return Q.all(_.map(files, function(file) {
             return readMail(file).then(function(mail) {
                 var filed = path.parse(file);
-                return render([mail], template, path.join(filed.dir, filed.name));
+                return render([mail], template, path.join(path.dirname(file), path.basename(file, '.eml')));
             });
         }));
     }
@@ -45,8 +45,8 @@ function readMail(filename) {
 }
 
 function render(mails, template, outname) {
-    var html = template(mails);
-    Q.all(Q.nfcall(fs.writeFile, outname + '.html', html),
+    var html = template({ mails: mails});
+    /* return Q.all(Q.nfcall(fs.writeFile, outname + '.html', html),
           Q.nfcall( pdf.create(html, {
         format: 'A4',
         orientation: 'portrait',
@@ -57,9 +57,10 @@ function render(mails, template, outname) {
             left: '0.8cm'
         },
         type: 'pdf'
-    }).toFile, outname + '.pdf'));
+    }).toFile, outname + '.pdf')); */
+     fs.writeFileSync('/Users/Cu3PO42/Documents/emails.html', html);
 }
 
 hbs.registerHelper('formatDate', function(context, block) {
-    return moment(Date(context)).lang('de').format('L');
+    return moment(context).locale('de').format('L');
 });

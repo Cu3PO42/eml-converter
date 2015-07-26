@@ -14,7 +14,7 @@
                     </tr>
                     <tr>
                         <th>From</th>
-                        <td>{{from[0].name}} ({{from[0].address}})</td>
+                        <td>{{#each from}}{{name}} ({{address}}){{/each}}</td>
                     </tr>
                     <tr>
                         <th>To</th>
@@ -22,9 +22,11 @@
                     </tr>
                     <tr>
                         <th>Date</th>
-                        <td>{{date.toString()}}</td>
+                        <td>{{formatDate date}}</td>
                     </tr>
+                </table>
             </div>
+            <div class='message'>{{{html}}}</div>
         </div>
     {{/each}}
 </body>
